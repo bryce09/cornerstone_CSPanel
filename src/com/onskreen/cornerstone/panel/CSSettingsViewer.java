@@ -30,6 +30,7 @@ public class CSSettingsViewer extends Fragment{
     private ViewStub csTopApp;
     private ViewStub csBottomApp;
     private ViewStub csLaunch;
+    private ViewStub csWindowPanel;
     private boolean isInitialized = false;
     static final String CS_PREFS = "CSPrefs";
 
@@ -65,14 +66,17 @@ public class CSSettingsViewer extends Fragment{
 			String panel0 = settingsPref.getString("panel0", null);
 			String panel1 = settingsPref.getString("panel1", null);
 			boolean startup = settingsPref.getBoolean("startup", fa.getResources().getBoolean(R.bool.startup));
-
+			boolean three_windows = settingsPref.getBoolean("three_windows", fa.getResources().getBoolean(R.bool.three_windows));
+			
 			csTopApp = (ViewStub) fa.findViewById(R.id.cs_top_app);
 			csTopApp.inflate();
 			csBottomApp = (ViewStub) fa.findViewById(R.id.cs_bottom_app);
 			csBottomApp.inflate();
 			csLaunch = (ViewStub) fa.findViewById(R.id.cs_launch);
 			csLaunch.inflate();
-
+			csWindowPanel = (ViewStub) fa.findViewById(R.id.cs_windowpanel);
+			csWindowPanel.inflate();
+			
 			ArrayAdapter topAd = new ArrayAdapter(ctx, android.R.layout.simple_list_item_single_choice, apps);
 			final ListView topList = (ListView) fa.findViewById(R.id.cs_top_app_list);
 			topList.setAdapter(topAd);
@@ -130,11 +134,39 @@ public class CSSettingsViewer extends Fragment{
 					}
 				}
 			});
-
+			
 			if(startup) {
 				yesRB.setChecked(true);
 			} else {
 				noRB.setChecked(true);
+			}
+			
+			final RadioButton yesRBWP = (RadioButton) fa.findViewById(R.id.cs_windowpanel_radio0);
+			yesRB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					if(isChecked) {
+						editor.putBoolean("three_windows", true);
+						editor.commit();
+					}
+				}
+			});
+
+			final RadioButton noRBWP = (RadioButton) fa.findViewById(R.id.cs_windowpanel_radio0);
+			noRB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					if(isChecked) {
+						editor.putBoolean("three_windows", false);
+						editor.commit();
+					}
+				}
+			});
+			
+			if(three_windows) {
+				yesRBWP.setChecked(true);
+			} else {
+				noRBWP.setChecked(true);
 			}
 		}
 
@@ -142,14 +174,22 @@ public class CSSettingsViewer extends Fragment{
 			csTopApp.setVisibility(View.VISIBLE);
 			csBottomApp.setVisibility(View.INVISIBLE);
 			csLaunch.setVisibility(View.INVISIBLE);
+			csWindowPanel.setVisibility(View.INVISIBLE);
 		} else if(index == 1) {
 			csBottomApp.setVisibility(View.VISIBLE);
 			csTopApp.setVisibility(View.INVISIBLE);
 			csLaunch.setVisibility(View.INVISIBLE);
+			csWindowPanel.setVisibility(View.INVISIBLE);
 		}else if(index == 2) {
 			csLaunch.setVisibility(View.VISIBLE);
 			csTopApp.setVisibility(View.INVISIBLE);
 			csBottomApp.setVisibility(View.INVISIBLE);
+			csWindowPanel.setVisibility(View.INVISIBLE);
+		} else if (index == 3) {
+			csLaunch.setVisibility(View.INVISIBLE);
+			csTopApp.setVisibility(View.INVISIBLE);
+			csBottomApp.setVisibility(View.INVISIBLE);
+			csWindowPanel.setVisibility(View.VISIBLE);
 		}
     }
 

@@ -22,7 +22,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:scaleType="fitXY"
-		android:layout_marginTop="4dip"
+		android:layout_marginTop="0dip"
 	/>
 	<ImageView android:id="@+id/cs_settings"
 		android:src="@drawable/cornerstone_panel_control_settings"
@@ -47,13 +47,13 @@
 		android:layout_height="wrap_content"
 		android:background="@drawable/cs_app_header_focused"
 		android:layout_marginLeft="38dip"
-		android:layout_marginTop="2dip"
+		android:layout_marginTop="1dip"
 	/>
 	<TextView android:id="@+id/cs_app1_title"
 		android:layout_width="200dp"
 		android:layout_height="wrap_content"
 		android:text="@string/empty_str"
-		android:layout_marginTop="5dip"
+		android:layout_marginTop="1dip"
 		android:layout_marginLeft="55dip"
 		android:textStyle="bold"
 		android:gravity="center_vertical"
@@ -68,7 +68,7 @@
 		android:background="@drawable/control_applaunch_focused"
 		android:layout_alignParentRight="true"
 		android:layout_marginRight="10dp"
-		android:layout_marginTop="5dip"
+		android:layout_marginTop="1dip"
 	/>
 	<!-- Deactivated now. To Activate swap control uncomment the below setting.-->
 	<!--<ImageButton android:id="@+id/swap_0_button"
@@ -172,7 +172,7 @@
 		android:background="@drawable/control_applaunch_unfocused"
 		android:layout_alignParentRight="true"
 		android:layout_marginRight="10dp"
-		android:layout_marginTop="564dip"
+		android:layout_marginTop="570dip"
 	/>
 <!--Display:1024x600-->
 	<!-- Deactivated now. To Activate swap control uncomment the below setting.-->

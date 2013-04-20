@@ -28,4 +28,12 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:visibility="invisible" />
+    
+    <ViewStub
+        android:id="@+id/cs_windowpanel"
+        android:inflatedId="@+id/show_cs_windowpanel"
+        android:layout="@layout/cs_windowpanel_view_stub"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="invisible" />
 </RelativeLayout>
