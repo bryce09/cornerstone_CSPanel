@@ -1,5 +1,8 @@
 package com.onskreen.cornerstone.panel;
 
+import android.app.Activity;
+import android.app.ActivityManagerNative;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -19,6 +22,7 @@ import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Toast;
+import android.os.RemoteException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +64,7 @@ public class CSSettingsViewer extends Fragment{
 		final Context ctx = fa.getApplicationContext();
 		//Toast.makeText(ctx, "Selected setting is: " + index, Toast.LENGTH_LONG).show();
 		if(!isInitialized) {
-			final SharedPreferences settingsPref = fa.getSharedPreferences(CS_PREFS, 4);
+			final SharedPreferences settingsPref = fa.getSharedPreferences(CS_PREFS, 5); //MODE_WORLD_READABLE
 			final SharedPreferences.Editor editor = settingsPref.edit();
 
 			String panel0 = settingsPref.getString("panel0", null);
@@ -146,8 +150,14 @@ public class CSSettingsViewer extends Fragment{
 				@Override
 				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 					if(isChecked) {
-						editor.putBoolean("three_windows", true);
-						editor.commit();
+						/* issues need to be resolved. first off deactived! */
+						 //ActivityManagerNative.getDefault().setCornerstoneThreeWindows(true);
+						try {
+				ActivityManagerNative.getDefault().setCornerstoneLayoutWide(900);
+				
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
 					}
 				}
 			});
@@ -157,8 +167,12 @@ public class CSSettingsViewer extends Fragment{
 				@Override
 				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 					if(isChecked) {
-						editor.putBoolean("three_windows", false);
-						editor.commit();
+						try {
+				ActivityManagerNative.getDefault().setCornerstoneLayoutWide(600);
+				
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
 					}
 				}
 			});

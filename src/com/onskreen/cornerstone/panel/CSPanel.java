@@ -571,6 +571,7 @@ public class CSPanel extends Activity {
 			csState = Cornerstone_State.CLOSED;
 		} else if((csHandler == (ImageButton)view) && (csState == Cornerstone_State.CLOSED)){
 			try {
+				ActivityManagerNative.getDefault().setCornerstoneLayoutWide(800);
 				ActivityManagerNative.getDefault().setCornerstoneState(true);
 			} catch (RemoteException e) {
 				e.printStackTrace();
