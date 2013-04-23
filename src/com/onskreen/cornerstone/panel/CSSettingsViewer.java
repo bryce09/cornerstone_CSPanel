@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ActivityManagerNative;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.widget.CheckBox;
+import android.view.View.OnClickListener;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -23,6 +25,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 import android.os.RemoteException;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +38,11 @@ public class CSSettingsViewer extends Fragment{
     private ViewStub csBottomApp;
     private ViewStub csLaunch;
     private ViewStub csWindowPanel;
+    
     private boolean isInitialized = false;
     static final String CS_PREFS = "CSPrefs";
+    
+    CSPanel.Cornerstone_State csstate = CSPanel.Cornerstone_State.CLOSED;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -154,6 +160,7 @@ public class CSSettingsViewer extends Fragment{
 						 //ActivityManagerNative.getDefault().setCornerstoneThreeWindows(true);
 						try {
 				ActivityManagerNative.getDefault().setCornerstoneLayoutWide(900);
+				Log.w("cssettings", "bryce: cssetinnings width: " + 900);
 				
 			} catch (RemoteException e) {
 				e.printStackTrace();
@@ -169,7 +176,7 @@ public class CSSettingsViewer extends Fragment{
 					if(isChecked) {
 						try {
 				ActivityManagerNative.getDefault().setCornerstoneLayoutWide(600);
-				
+				Log.w("cssettings", "bryce: cssetinnings width: " + 600);
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
@@ -183,6 +190,30 @@ public class CSSettingsViewer extends Fragment{
 				noRBWP.setChecked(true);
 			}
 		}
+		final CheckBox checkBoxUseHalfScreen = (CheckBox) fa.findViewById(R.id.cs_windowpanel_checkbox);
+		checkBoxUseHalfScreen.setOnClickListener(new OnClickListener() {
+			@Override
+	          public void onClick(View v) {   
+				int d = 600;
+				csstate = CSPanel.csState;
+	            if (((CheckBox) v).isChecked()) {
+	                d = 922;
+	            }
+	            else {
+	            	d = 600;
+	            }
+	            try {
+	            	if(csstate == CSPanel.Cornerstone_State.OPEN) {
+	            		ActivityManagerNative.getDefault().setCornerstoneLayoutWide(d);
+	            		ActivityManagerNative.getDefault().setCornerstoneState(false);
+	            		ActivityManagerNative.getDefault().setCornerstoneState(true);
+	            	}
+					Log.w("cssettings", "bryce: csspaenl width: " + d);
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
+	          }
+		});
 
 		if(index == 0) {
 			csTopApp.setVisibility(View.VISIBLE);

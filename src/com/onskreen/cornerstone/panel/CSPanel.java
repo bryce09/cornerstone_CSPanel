@@ -67,12 +67,12 @@ public class CSPanel extends Activity {
     String mCSLauncherPkgName;
     String mCSLauncherClassName;
 
-    enum Cornerstone_State {
+    public enum Cornerstone_State {
         OPEN,
         CLOSED
     }
     //Begins in expanded state
-    Cornerstone_State csState = Cornerstone_State.OPEN;
+    public static Cornerstone_State csState = Cornerstone_State.OPEN;
 
     /**
      * Author: Onskreen
@@ -81,16 +81,12 @@ public class CSPanel extends Activity {
      * Cornerstone controls
      */
     private ImageButton csAppHeader1;
-    private ImageButton csAppHeader2;
     private ImageButton csHandler;
     private ImageButton csAppSwap1;
-    private ImageButton csAppSwap2;
     private ImageButton csAppLaunch1;
-    private ImageButton csAppLaunch2;
     private ImageView csClose;
     private ImageView csSettings;
     private TextView csAppTitle1;
-    private TextView csAppTitle2;
 
     /**
      * Author: Onskreen
@@ -305,8 +301,7 @@ public class CSPanel extends Activity {
 					csAppTitle1.setText(title);
 					break;
 				case 1:
-					setCornerstoneAppControls(1);
-					csAppTitle2.setText(title);
+					
 					break;
 				default:
 					setCornerstoneAppControls(-1);
@@ -345,10 +340,8 @@ public class CSPanel extends Activity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         CharSequence title1 = csAppTitle1.getText();
-        CharSequence title2 = csAppTitle2.getText();
 
         String header1 = (String)csAppHeader1.getTag();
-        String header2 = (String)csAppHeader2.getTag();
 
         super.onConfigurationChanged(newConfig);
         if (newConfig != null){
@@ -365,15 +358,13 @@ public class CSPanel extends Activity {
             initializeControls();
 
             csAppTitle1.setText(title1);
-            csAppTitle2.setText(title2);
+
 
             switch(csState) {
             case OPEN:
                 csHandler.setBackgroundResource(R.drawable.cornerstone_panel_controller_expanded);
                 if(header1.equals("focused")){
                     setCornerstoneAppControls(0);
-                } else if(header2.equals("focused")){
-                    setCornerstoneAppControls(1);
                 } else {
                     setCornerstoneAppControls(-1);
                 }
@@ -423,14 +414,6 @@ public class CSPanel extends Activity {
         };
         csAppHeader1.setOnClickListener(appHeader1Listener);
 
-        csAppHeader2 = (ImageButton) findViewById(R.id.cs_app_header2);
-        OnClickListener appHeader2Listener = new OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                handleFocus(v);
-            }
-        };
-        csAppHeader2.setOnClickListener(appHeader2Listener);
 
         csHandler = (ImageButton) findViewById(R.id.handle);
         OnClickListener handleListener = new OnClickListener(){
@@ -474,17 +457,9 @@ public class CSPanel extends Activity {
         csAppLaunch1.setOnClickListener(appLaunch1Listener);
 
 
-        csAppLaunch2 = (ImageButton) findViewById(R.id.launch_1_button);
-        OnClickListener appLaunch2Listener = new OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                launchApp(v);
-            }
-        };
-        csAppLaunch2.setOnClickListener(appLaunch2Listener);
+
 
         csAppTitle1 = (TextView)findViewById(R.id.cs_app1_title);
-        csAppTitle2 = (TextView)findViewById(R.id.cs_app2_title);
 
         mPkgManager = getApplicationContext().getPackageManager();
     }
@@ -533,10 +508,7 @@ public class CSPanel extends Activity {
 				csAppLaunch1.setBackgroundResource(R.drawable.control_applaunch_click);
 				index = 0;
 				break;
-			case R.id.launch_1_button:
-				csAppLaunch2.setBackgroundResource(R.drawable.control_applaunch_click);
-				index = 1;
-				break;
+
 		}
 
        /**
@@ -571,7 +543,6 @@ public class CSPanel extends Activity {
 			csState = Cornerstone_State.CLOSED;
 		} else if((csHandler == (ImageButton)view) && (csState == Cornerstone_State.CLOSED)){
 			try {
-				ActivityManagerNative.getDefault().setCornerstoneLayoutWide(800);
 				ActivityManagerNative.getDefault().setCornerstoneState(true);
 			} catch (RemoteException e) {
 				e.printStackTrace();
@@ -595,9 +566,6 @@ public class CSPanel extends Activity {
 		switch(view.getId()) {
 			case R.id.cs_app_header1:
 				index = 0;
-				break;
-			case R.id.cs_app_header2:
-				index = 1;
 				break;
 		}
 		try {
@@ -684,16 +652,10 @@ public class CSPanel extends Activity {
 			/*csAppSwap1.setBackgroundResource(R.drawable.control_swap_focused);
 			csAppSwap2.setBackgroundResource(R.drawable.control_swap_unfocused);*/
 
-			csAppHeader2.setBackgroundResource(R.drawable.cs_app_header_unfocused);
-			csAppHeader2.setTag("unfocused");
-			csAppLaunch2.setBackgroundResource(R.drawable.control_applaunch_unfocused);
-			csAppTitle2.setTextColor(Color.LTGRAY);
+
 			break;
 		case 1:
-			csAppHeader2.setBackgroundResource(R.drawable.cs_app_header_focused);
-			csAppHeader2.setTag("focused");
-			csAppLaunch2.setBackgroundResource(R.drawable.control_applaunch_focused);
-			csAppTitle2.setTextColor(Color.WHITE);
+
 
 			/**
 			 * Author: Onskreen
@@ -724,10 +686,7 @@ public class CSPanel extends Activity {
 			/*csAppSwap1.setBackgroundResource(R.drawable.control_swap_unfocused);
 			csAppSwap2.setBackgroundResource(R.drawable.control_swap_unfocused);*/
 
-			csAppHeader2.setBackgroundResource(R.drawable.cs_app_header_unfocused);
-			csAppHeader2.setTag("unfocused");
-			csAppLaunch2.setBackgroundResource(R.drawable.control_applaunch_unfocused);
-			csAppTitle2.setTextColor(Color.LTGRAY);
+
 			break;
         }
     }

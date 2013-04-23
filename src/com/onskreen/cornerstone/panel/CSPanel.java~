@@ -129,6 +129,7 @@ public class CSPanel extends Activity {
     @Override
     public void onResume() {
         super.onResume();
+	Log.w("cornerstone", "on resume");
         /**Start the cornerstone apps once the cornerstone itself is visible**/
 
         if(!isCornestoneStarted) {
@@ -160,6 +161,7 @@ public class CSPanel extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+	Log.w("cornerstone", "on create1");
         /**
          * Author: Onskreen
          * Date: 13/07/2011
@@ -184,7 +186,7 @@ public class CSPanel extends Activity {
         mCornerstoneApps = new String[2];
         mCornerstoneApps[0] =  panel0;
         mCornerstoneApps[1] =  panel1;
-
+	Log.w("cornerstone", "on create 2");
         /**
          * Author: Onskreen
          * Date: 20/07/2011
@@ -243,6 +245,7 @@ public class CSPanel extends Activity {
          * sets the contentview with appropriate layout file as per the current
          * configuration.
          */
+	Log.w("cornerstone", "on create3");
         Configuration config = getApplicationContext().getResources().getConfiguration();
         if (config != null){
             int orientation = config.orientation;
@@ -261,6 +264,7 @@ public class CSPanel extends Activity {
          *
          * Initialize the UI controls at startup of the app
          */
+	Log.w("cornerstone", "on initialize the UI controls at startup of the ");
         initializeControls();
 
        /**
@@ -269,6 +273,7 @@ public class CSPanel extends Activity {
         *
         * Update the UI controls in UI thread when WMS notifies the cornerstone app
         */
+	Log.w("cornerstone", "Update the UI controls in UI thread when WMS notifies the cornerstone app");
         mHandler = new Handler(){
 		@Override
 		public void handleMessage(Message msg) {
@@ -282,6 +287,7 @@ public class CSPanel extends Activity {
             *
             * Sets the appropriate cs title for the app running in cs panel.
             */
+	Log.w("cornerstone", "ets the appropriate cs title for the app running in cs panel");
 			CharSequence title = pkg;
 			if(pkg != null){
 				try{
@@ -316,6 +322,7 @@ public class CSPanel extends Activity {
         * Registers the ICornerstoneManager interface with AMS, so that AMS can notify conerstone app
         * whenever user changes the focus
         */
+	Log.w("cornerstone", "Registers the ICornerstoneManager interface with AMS");
         try{
             ActivityManagerNative.getDefault().setCornerstoneManager(mBinder);
         } catch (RemoteException e){
@@ -564,6 +571,7 @@ public class CSPanel extends Activity {
 			csState = Cornerstone_State.CLOSED;
 		} else if((csHandler == (ImageButton)view) && (csState == Cornerstone_State.CLOSED)){
 			try {
+				ActivityManagerNative.getDefault().setCornerstoneLayoutWide(800);
 				ActivityManagerNative.getDefault().setCornerstoneState(true);
 			} catch (RemoteException e) {
 				e.printStackTrace();

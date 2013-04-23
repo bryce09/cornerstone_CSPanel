@@ -40,5 +40,14 @@
             android:text="@string/cs_windowpanel_radio_no" />
 
     </RadioGroup>
+    
+    
+    <CheckBox
+        android:id="@+id/cs_windowpanel_checkbox"
+        android:layout_marginLeft="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cs_windowpanel_checkbox_description"
+        ></CheckBox>
 
 </RelativeLayout>
